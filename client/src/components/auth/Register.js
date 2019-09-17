@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { setAlert } from '../../actions/alert';
+import PropTypes from 'prop-types';
 
-const Register = () => {
+const Register = ({ setAlert }) => {
   // hooks
   const [formData, setFormData] = useState({
     name: '',
@@ -29,7 +32,7 @@ const Register = () => {
   const onSubmit = async e => {
     e.preventDefault();
     if (password !== password2) {
-      console.log('Passwords do no match');
+      setAlert('Passwords do no match', 'danger');
     } else {
       console.log('Success')
     }
@@ -79,6 +82,9 @@ const Register = () => {
       </p>
     </>
   )
+};
+Register.propTypes = {
+  setAlert: PropTypes.func.isRequired
 }
-
-export default Register
+// takes in state we want to map and an object with actions we want to use 
+export default connect(null, { setAlert })(Register)
